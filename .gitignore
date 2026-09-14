@@ -1,0 +1,16 @@
+# Dados de inscritos NUNCA devem ser versionados.
+# backend/data/inscricoes.csv é apenas o modelo de colunas (sem registros).
+backend/data/*
+!backend/data/inscricoes.csv
+*.xlsx
+exports/
+
+# Segredos e ambiente
+.env
+.env.*
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.claude/
+node_modules/

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O Duelo — Campeonato de Jiu-Jitsu</title>
+  <meta name="description" content="O Duelo é um campeonato de Jiu-Jitsu (BJJ) em São Paulo. O Duelo (adulto e master), O Duelinho (kids e juvenil) e Fantastic Duelo. Confira o próximo evento e faça sua inscrição.">
+  <meta name="theme-color" content="#171717">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="O Duelo — Campeonato de Jiu-Jitsu">
+  <meta property="og:description" content="O Duelo, O Duelinho e Fantastic Duelo. Um só propósito: fazer história.">
+  <meta property="og:locale" content="pt_BR">
+  <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="js/data.js"></script>
+  <script defer src="js/utils.js"></script>
+  <script defer src="js/eventos.js"></script>
+  <script defer src="js/render.js"></script>
+  <script defer src="js/validation.js"></script>
+  <script defer src="js/api.js"></script>
+  <script defer src="js/form.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Sprite: logo e ícones reutilizados via <use> -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="fx-concrete" x="-4%" y="-8%" width="108%" height="116%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="4" result="grain"/>
+        <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -14 0 0 0 10.6" result="grainMask"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.11" numOctaves="2" seed="11" result="wear"/>
+        <feColorMatrix in="wear" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -8 0 0 0 6.3" result="wearMask"/>
+        <feComposite in="grainMask" in2="wearMask" operator="in" result="mask"/>
+        <feComposite in="SourceGraphic" in2="mask" operator="in"/>
+      </filter>
+
+      <clipPath id="cut-left"><polygon points="-20,-20 215.4,-20 175.7,120 -20,120"/></clipPath>
+      <clipPath id="cut-right"><polygon points="218.4,-20 360,-20 360,120 178.7,120"/></clipPath>
+
+      <g id="glyphs-oduelo" fill-rule="evenodd">
+        <path d="M18,0 H30 A18,18 0 0 1 48,18 V82 A18,18 0 0 1 30,100 H18 A18,18 0 0 1 0,82 V18 A18,18 0 0 1 18,0 Z M24,15 A6,6 0 0 1 30,21 V79 A6,6 0 0 1 18,79 V21 A6,6 0 0 1 24,15 Z"/>
+        <path transform="translate(78 0)" d="M0,0 H31 A18,18 0 0 1 49,18 V82 A18,18 0 0 1 31,100 H0 Z M18,15 H25 A6,6 0 0 1 31,21 V79 A6,6 0 0 1 25,85 H18 Z"/>
+        <path transform="translate(137 0)" d="M0,0 H18 V79 A6,6 0 0 0 30,79 V0 H48 V82 A18,18 0 0 1 30,100 H18 A18,18 0 0 1 0,82 Z"/>
+        <path transform="translate(195 0)" d="M0,0 H36 V15 H18 V42.5 H33 V57.5 H18 V85 H36 V100 H0 Z"/>
+        <path transform="translate(241 0)" d="M0,0 H18 V85 H34 V100 H0 Z"/>
+        <path transform="translate(283 0)" d="M18,0 H30 A18,18 0 0 1 48,18 V82 A18,18 0 0 1 30,100 H18 A18,18 0 0 1 0,82 V18 A18,18 0 0 1 18,0 Z M24,15 A6,6 0 0 1 30,21 V79 A6,6 0 0 1 18,79 V21 A6,6 0 0 1 24,15 Z"/>
+      </g>
+
+      <g id="glyphs-campeonato" fill-rule="evenodd">
+        <path d="M15,9.5 V5 A5,5 0 0 0 10,0 H5 A5,5 0 0 0 0,5 V24 A5,5 0 0 0 5,29 H10 A5,5 0 0 0 15,24 V19.5 H10.8 V23.5 A1.5,1.5 0 0 1 9.3,25 H5.7 A1.5,1.5 0 0 1 4.2,23.5 V5.5 A1.5,1.5 0 0 1 5.7,4 H9.3 A1.5,1.5 0 0 1 10.8,5.5 V9.5 Z"/>
+        <path transform="translate(17.6 0)" d="M0,29 L4.4,0 H11.1 L15.5,29 H11.3 L10.4,23 H5.1 L4.2,29 Z M5.7,19 H9.8 L7.75,5.6 Z"/>
+        <path transform="translate(35.7 0)" d="M0,29 V0 H5 L9.25,13 L13.5,0 H18.5 V29 H14.3 V11.5 L11.2,21 H7.3 L4.2,11.5 V29 Z"/>
+        <path transform="translate(56.8 0)" d="M0,29 V0 H10 A5,5 0 0 1 15,5 V13 A5,5 0 0 1 10,18 H4.2 V29 Z M4.2,4 H9.3 A1.5,1.5 0 0 1 10.8,5.5 V12.5 A1.5,1.5 0 0 1 9.3,14 H4.2 Z"/>
+        <path transform="translate(74.4 0)" d="M0,0 H12 V4 H4.2 V12.5 H11 V16.5 H4.2 V25 H12 V29 H0 Z"/>
+        <path transform="translate(89 0)" d="M5,0 H10 A5,5 0 0 1 15,5 V24 A5,5 0 0 1 10,29 H5 A5,5 0 0 1 0,24 V5 A5,5 0 0 1 5,0 Z M5.7,4 H9.3 A1.5,1.5 0 0 1 10.8,5.5 V23.5 A1.5,1.5 0 0 1 9.3,25 H5.7 A1.5,1.5 0 0 1 4.2,23.5 V5.5 A1.5,1.5 0 0 1 5.7,4 Z"/>
+        <path transform="translate(106.6 0)" d="M0,29 V0 H4.6 L11.3,19 V0 H15.5 V29 H10.9 L4.2,10 V29 Z"/>
+        <path transform="translate(124.7 0)" d="M0,29 L4.4,0 H11.1 L15.5,29 H11.3 L10.4,23 H5.1 L4.2,29 Z M5.7,19 H9.8 L7.75,5.6 Z"/>
+        <path transform="translate(142.8 0)" d="M0,0 H13 V4 H8.6 V29 H4.4 V4 H0 Z"/>
+        <path transform="translate(158.4 0)" d="M5,0 H10 A5,5 0 0 1 15,5 V24 A5,5 0 0 1 10,29 H5 A5,5 0 0 1 0,24 V5 A5,5 0 0 1 5,0 Z M5.7,4 H9.3 A1.5,1.5 0 0 1 10.8,5.5 V23.5 A1.5,1.5 0 0 1 9.3,25 H5.7 A1.5,1.5 0 0 1 4.2,23.5 V5.5 A1.5,1.5 0 0 1 5.7,4 Z"/>
+      </g>
+
+      <!-- Wordmark "O DUELO" com o corte diagonal (coordenadas 0..331 × 0..100) -->
+      <g id="logo-wordmark">
+        <use href="#glyphs-oduelo" clip-path="url(#cut-left)"/>
+        <use href="#glyphs-oduelo" clip-path="url(#cut-right)" transform="translate(-0.8 2.9)"/>
+        <polygon class="logo-slash" points="213.9,-14 216.4,-14 180.7,112 178.2,112"/>
+      </g>
+
+      <!-- Logo completa com "CAMPEONATO" (coordenadas 0..331 × 0..165) -->
+      <g id="logo-full">
+        <use href="#glyphs-campeonato" transform="translate(78.8 0)"/>
+        <use href="#logo-wordmark" transform="translate(0 53)"/>
+      </g>
+    </defs>
+
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19Z"/><path d="M12 10v4.5M12 17v.5"/></symbol>
+  </svg>
+
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a class="brand" href="#topo" aria-label="O Duelo — voltar ao início">
+        <svg class="brand__logo" viewBox="-2 -16 336 130" aria-hidden="true"><use href="#logo-wordmark"/></svg>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Principal" data-nav>
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#o-duelo"><span class="site-nav__index">01</span>O Duelo</a></li>
+          <li><a class="site-nav__link" href="#o-duelinho"><span class="site-nav__index">02</span>Duelinho</a></li>
+          <li><a class="site-nav__link" href="#fantastic"><span class="site-nav__index">03</span>Fantastic</a></li>
+          <li><a class="site-nav__link" href="#inscricao"><span class="site-nav__index">04</span>Inscrições</a></li>
+        </ul>
+        <div class="site-nav__extra">
+          <a class="btn btn--primary btn--block" href="#inscricao" data-inscricao>
+            Inscreva-se <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <ul class="social-list" data-render="social"></ul>
+        </div>
+      </nav>
+
+      <a class="btn btn--primary btn--sm site-header__cta" href="#inscricao" data-inscricao>Inscreva-se</a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+        <span class="visually-hidden" data-menu-label>Abrir menu</span>
+        <span class="menu-toggle__bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- HERO -->
+    <section class="hero" id="topo" aria-labelledby="hero-titulo">
+      <div class="container hero__inner">
+        <div class="hero__meta">
+          <p class="hero__meta-item" data-render="hero-status"></p>
+          <p class="hero__meta-item">Campeonato de Jiu-Jitsu <span class="hero__meta-sep" aria-hidden="true">/</span> BJJ</p>
+          <p class="hero__meta-item hero__meta-item--end" data-render="hero-city"></p>
+        </div>
+
+        <h1 class="hero__title" id="hero-titulo">
+          <span class="visually-hidden">O Duelo — Campeonato de Jiu-Jitsu</span>
+          <svg class="hero__logo" viewBox="-2 -2 336 169" aria-hidden="true">
+            <g class="logo-texture">
+              <g class="hero__logo-top"><use href="#glyphs-campeonato" transform="translate(78.8 0)"/></g>
+              <g transform="translate(0 53)">
+                <g class="hero__logo-left"><use href="#glyphs-oduelo" clip-path="url(#cut-left)"/></g>
+                <g class="hero__logo-right"><use href="#glyphs-oduelo" clip-path="url(#cut-right)" transform="translate(-0.8 2.9)"/></g>
+              </g>
+            </g>
+            <polygon class="logo-slash hero__logo-slash" points="213.9,39 216.4,39 180.7,165 178.2,165"/>
+          </svg>
+        </h1>
+
+        <div class="hero__rail">
+          <p class="hero__lead">Do kids ao master.<br>Da faixa branca à preta.</p>
+          <div class="hero__date" data-render="hero-date"></div>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#inscricao" data-inscricao>
+              Inscreva-se <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#proximo-evento">Próximo evento</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" data-marquee>
+        <span class="marquee__item">Jiu-Jitsu</span>
+        <span class="marquee__item">BJJ</span>
+        <span class="marquee__item">O Duelo</span>
+        <span class="marquee__item">Competition</span>
+        <span class="marquee__item">O Duelinho</span>
+        <span class="marquee__item">Lutas casadas</span>
+        <span class="marquee__item">Fazer história</span>
+      </div>
+    </div>
+
+    <!-- PRÓXIMO EVENTO -->
+    <section class="section section--dark next-event" id="proximo-evento" aria-labelledby="proximo-evento-titulo">
+      <div class="container">
+        <header class="section-head section-head--split">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__index">00</span>Agenda</p>
+            <h2 class="section-title" id="proximo-evento-titulo">Próximo evento</h2>
+            <p class="section-lead" data-render="next-event-summary"></p>
+          </div>
+          <div class="countdown" data-render="countdown"></div>
+        </header>
+        <div data-render="next-event"></div>
+      </div>
+    </section>
+
+    <!-- MODALIDADES (renderizadas a partir de js/data.js) -->
+    <section class="section competition competition--duelo" id="o-duelo" data-competition="duelo" aria-labelledby="duelo-titulo"></section>
+    <section class="section competition competition--duelinho" id="o-duelinho" data-competition="duelinho" aria-labelledby="duelinho-titulo"></section>
+    <section class="section section--dark competition competition--fantastic" id="fantastic" data-competition="fantastic" aria-labelledby="fantastic-titulo"></section>
+
+    <!-- COMO PARTICIPAR -->
+    <section class="section how" id="como-participar" aria-labelledby="como-participar-titulo">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Como participar</p>
+          <h2 class="section-title" id="como-participar-titulo">Escolha seu duelo</h2>
+          <p class="section-lead">O Duelo e O Duelinho acontecem em dias diferentes e para públicos diferentes. Compare os dois e siga os passos da inscrição.</p>
+        </header>
+
+        <div class="versus" data-render="versus"></div>
+
+        <ol class="steps">
+          <li class="step" data-reveal>
+            <span class="step__index">01</span>
+            <h3 class="step__title">Escolha o evento</h3>
+            <p class="step__text">O Duelo para atletas adultos e master. O Duelinho para kids e juvenil.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__index">02</span>
+            <h3 class="step__title">Preencha os dados</h3>
+            <p class="step__text">Documento, contato, equipe, professor, faixa e categoria. No Duelinho, quem preenche é o responsável.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__index">03</span>
+            <h3 class="step__title">Aceite os termos</h3>
+            <p class="step__text">Termo de responsabilidade e autorização de uso dos dados, conforme a LGPD.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__index">04</span>
+            <h3 class="step__title">Dia do duelo</h3>
+            <p class="step__text">Confira data e local do próximo evento e prepare-se para fazer história no tatame.</p>
+          </li>
+        </ol>
+
+        <div class="how__cta">
+          <a class="btn btn--primary btn--lg" href="#inscricao" data-inscricao>
+            Inscreva-se <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSCRIÇÃO -->
+    <section class="section signup" id="inscricao" aria-labelledby="inscricao-titulo">
+      <div class="container signup__grid">
+        <aside class="signup__aside">
+          <p class="eyebrow"><span class="eyebrow__index">04</span>Inscrições</p>
+          <h2 class="section-title" id="inscricao-titulo">Inscreva-se</h2>
+          <p class="section-lead">Leva poucos minutos. Campos marcados com <span class="req" aria-hidden="true">*</span> são obrigatórios.</p>
+          <div class="signup__summary" data-render="signup-summary"></div>
+          <div class="signup__privacy">
+            <svg class="signup__privacy-icon" aria-hidden="true"><use href="#i-lock"/></svg>
+            <p>Os dados são enviados por conexão segura direto ao sistema de inscrições da organização. Nada fica salvo neste navegador e a senha é armazenada somente em formato criptografado.</p>
+          </div>
+        </aside>
+
+        <div class="signup__main">
+        <form class="form" id="form-inscricao" novalidate data-form>
+          <div class="form__notice" data-form-notice hidden></div>
+
+          <fieldset class="form__group">
+            <legend class="form__legend">Evento</legend>
+            <div class="event-options" data-render="event-options"></div>
+            <p class="field__error" id="competicao-erro" data-error-for="competicao"></p>
+            <div class="field" data-edition-field hidden>
+              <label class="field__label" for="edicao">Edição <span class="req" aria-hidden="true">*</span></label>
+              <select class="field__control" id="edicao" name="edicao" required aria-describedby="edicao-erro"></select>
+              <p class="field__error" id="edicao-erro"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__group" data-guardian hidden disabled>
+            <legend class="form__legend">Dados do responsável</legend>
+            <p class="form__hint">O Duelinho é um evento infantil: a inscrição deve ser feita pela mãe, pai ou responsável legal do atleta.</p>
+            <div class="form__grid">
+              <div class="field field--wide">
+                <label class="field__label" for="responsavel_nome">Nome completo do responsável <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="responsavel_nome" name="responsavel_nome" type="text" autocomplete="name" required aria-describedby="responsavel_nome-erro">
+                <p class="field__error" id="responsavel_nome-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="responsavel_cpf">CPF do responsável <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="responsavel_cpf" name="responsavel_cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" required aria-describedby="responsavel_cpf-erro">
+                <p class="field__error" id="responsavel_cpf-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="responsavel_parentesco">Parentesco <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="responsavel_parentesco" name="responsavel_parentesco" required aria-describedby="responsavel_parentesco-erro" data-options="parentescos"></select>
+                <p class="field__error" id="responsavel_parentesco-erro"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__group">
+            <legend class="form__legend">Dados do atleta</legend>
+            <div class="form__grid">
+              <div class="field field--wide">
+                <label class="field__label" for="nome_completo">Nome completo do atleta <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="nome_completo" name="nome_completo" type="text" autocomplete="name" required aria-describedby="nome_completo-erro">
+                <p class="field__error" id="nome_completo-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="data_nascimento">Data de nascimento <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="data_nascimento" name="data_nascimento" type="date" required aria-describedby="data_nascimento-dica data_nascimento-erro">
+                <p class="field__hint" id="data_nascimento-dica" data-age-hint></p>
+                <p class="field__error" id="data_nascimento-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="sexo">Sexo <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="sexo" name="sexo" required aria-describedby="sexo-erro" data-options="sexos"></select>
+                <p class="field__error" id="sexo-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="documento_tipo">Documento <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="documento_tipo" name="documento_tipo" required aria-describedby="documento_tipo-erro" data-options="documentos"></select>
+                <p class="field__error" id="documento_tipo-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="cpf_rg">Número do documento <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="cpf_rg" name="cpf_rg" type="text" autocomplete="off" required aria-describedby="cpf_rg-erro">
+                <p class="field__error" id="cpf_rg-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="pais">País <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="pais" name="pais" required autocomplete="country-name" aria-describedby="pais-erro" data-options="paises"></select>
+                <p class="field__error" id="pais-erro"></p>
+              </div>
+              <div class="field field--wide">
+                <label class="field__label" for="endereco">Endereço completo <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="endereco" name="endereco" type="text" autocomplete="street-address" placeholder="Rua, número, bairro, cidade/UF" required aria-describedby="endereco-erro">
+                <p class="field__error" id="endereco-erro"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__group">
+            <legend class="form__legend">Contato e acesso</legend>
+            <p class="form__hint" data-guardian-hint hidden>Informe o e-mail e o telefone do responsável.</p>
+            <div class="form__grid">
+              <div class="field">
+                <label class="field__label" for="email">E-mail <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-erro">
+                <p class="field__error" id="email-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="telefone">Telefone / WhatsApp <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(11) 90000-0000" required aria-describedby="telefone-erro">
+                <p class="field__error" id="telefone-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="senha">Senha <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="senha" name="senha" type="password" autocomplete="new-password" required aria-describedby="senha-dica senha-erro">
+                <p class="field__hint" id="senha-dica">Mínimo de 8 caracteres, com letras e números.</p>
+                <p class="field__error" id="senha-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="senha_confirmacao">Confirme a senha <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="senha_confirmacao" name="senha_confirmacao" type="password" autocomplete="new-password" required aria-describedby="senha_confirmacao-erro">
+                <p class="field__error" id="senha_confirmacao-erro"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__group">
+            <legend class="form__legend">Competição</legend>
+            <div class="form__grid">
+              <div class="field">
+                <label class="field__label" for="equipe">Equipe / Academia <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="equipe" name="equipe" type="text" autocomplete="organization" required aria-describedby="equipe-erro">
+                <p class="field__error" id="equipe-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="professor">Professor responsável <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="professor" name="professor" type="text" autocomplete="off" required aria-describedby="professor-erro">
+                <p class="field__error" id="professor-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="faixa">Faixa / Graduação <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="faixa" name="faixa" required aria-describedby="faixa-erro"></select>
+                <p class="field__error" id="faixa-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="divisao">Divisão <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="divisao" name="divisao" required aria-describedby="divisao-erro"></select>
+                <p class="field__error" id="divisao-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="peso_kg">Peso atual (kg) <span class="req" aria-hidden="true">*</span></label>
+                <input class="field__control" id="peso_kg" name="peso_kg" type="number" inputmode="decimal" min="10" max="250" step="0.1" required aria-describedby="peso_kg-dica peso_kg-erro">
+                <p class="field__hint" id="peso_kg-dica">Usado para casar as lutas (diferença de até 3 kg).</p>
+                <p class="field__error" id="peso_kg-erro"></p>
+              </div>
+              <div class="field" data-weight-field>
+                <label class="field__label" for="categoria_peso">Categoria de peso <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="categoria_peso" name="categoria_peso" required aria-describedby="categoria_peso-erro"></select>
+                <p class="field__error" id="categoria_peso-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="categoria_absoluto">Categoria absoluto <span class="req" aria-hidden="true">*</span></label>
+                <select class="field__control" id="categoria_absoluto" name="categoria_absoluto" required aria-describedby="categoria_absoluto-erro"></select>
+                <p class="field__error" id="categoria_absoluto-erro"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="filiacao_federacao">Nº de filiação à federação <span class="field__optional">(opcional)</span></label>
+                <input class="field__control" id="filiacao_federacao" name="filiacao_federacao" type="text" autocomplete="off" maxlength="40" aria-describedby="filiacao_federacao-erro">
+                <p class="field__error" id="filiacao_federacao-erro"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__group">
+            <legend class="form__legend">Termos</legend>
+            <div class="terms" tabindex="0" role="region" aria-labelledby="termos-titulo">
+              <h3 class="terms__title" id="termos-titulo">Termo de responsabilidade</h3>
+              <div data-render="terms"></div>
+            </div>
+            <div class="check">
+              <input class="check__input" id="aceite_termos" name="aceite_termos" type="checkbox" value="sim" required aria-describedby="aceite_termos-erro">
+              <label class="check__label" for="aceite_termos">Li e aceito o termo de responsabilidade. <span class="req" aria-hidden="true">*</span></label>
+              <p class="field__error" id="aceite_termos-erro"></p>
+            </div>
+            <div class="check" data-guardian-consent hidden>
+              <input class="check__input" id="aceite_responsavel" name="aceite_responsavel" type="checkbox" value="sim" required disabled aria-describedby="aceite_responsavel-erro">
+              <label class="check__label" for="aceite_responsavel"><span data-render="guardian-consent"></span> <span class="req" aria-hidden="true">*</span></label>
+              <p class="field__error" id="aceite_responsavel-erro"></p>
+            </div>
+            <div class="check">
+              <input class="check__input" id="aceite_lgpd" name="aceite_lgpd" type="checkbox" value="sim" required aria-describedby="aceite_lgpd-erro">
+              <label class="check__label" for="aceite_lgpd"><span data-render="lgpd-consent"></span> <span class="req" aria-hidden="true">*</span></label>
+              <p class="field__error" id="aceite_lgpd-erro"></p>
+            </div>
+          </fieldset>
+
+          <!-- Campo armadilha contra robôs: invisível para pessoas -->
+          <div class="form__trap" aria-hidden="true">
+            <label for="website">Não preencha este campo</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form__footer">
+            <button class="btn btn--primary btn--lg" type="submit" data-submit>
+              <span data-submit-label>Confirmar inscrição</span>
+              <svg class="btn__icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </button>
+            <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+          </div>
+        </form>
+        <div class="form-success" data-form-success tabindex="-1" role="status" hidden></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand">
+        <svg class="site-footer__logo" viewBox="-2 -2 336 169" role="img" aria-label="O Duelo — Campeonato"><use href="#logo-full"/></svg>
+        <p class="site-footer__slogan">Um só propósito: fazer história.</p>
+      </div>
+      <nav class="site-footer__col" aria-label="Competições">
+        <h2 class="site-footer__heading">Competições</h2>
+        <ul class="site-footer__links">
+          <li><a href="#o-duelo">O Duelo</a></li>
+          <li><a href="#o-duelinho">O Duelinho</a></li>
+          <li><a href="#fantastic">Fantastic Duelo</a></li>
+        </ul>
+      </nav>
+      <nav class="site-footer__col" aria-label="Participe">
+        <h2 class="site-footer__heading">Participe</h2>
+        <ul class="site-footer__links">
+          <li><a href="#proximo-evento">Próximo evento</a></li>
+          <li><a href="#como-participar">Como participar</a></li>
+          <li><a href="#inscricao">Inscrições</a></li>
+        </ul>
+      </nav>
+      <div class="site-footer__col">
+        <h2 class="site-footer__heading">Contato e redes</h2>
+        <ul class="social-list" data-render="social"></ul>
+      </div>
+    </div>
+    <div class="container site-footer__bottom">
+      <p>© <span data-render="year"></span> O Duelo — Campeonato de Jiu-Jitsu. Todos os direitos reservados.</p>
+      <a class="site-footer__top" href="#topo">Voltar ao topo</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <p class="noscript">Ative o JavaScript para ver a agenda de eventos e realizar a inscrição.</p>
+  </noscript>
+</body>
+</html>

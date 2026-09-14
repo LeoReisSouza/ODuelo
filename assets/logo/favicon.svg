@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#171717"/>
+  <path transform="translate(21.9 11) scale(0.42)" fill="#F4F3EF" fill-rule="evenodd" d="M18,0 H30 A18,18 0 0 1 48,18 V82 A18,18 0 0 1 30,100 H18 A18,18 0 0 1 0,82 V18 A18,18 0 0 1 18,0 Z M24,15 A6,6 0 0 1 30,21 V79 A6,6 0 0 1 18,79 V21 A6,6 0 0 1 24,15 Z"/>
+  <polygon fill="#2F66FF" stroke="#171717" stroke-width="2.5" points="40,4 43.5,4 27,60 23.5,60"/>
+</svg>
